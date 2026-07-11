@@ -790,10 +790,10 @@ def render_tab_produk(df_asli, hari_prediksi, tgl_akhir_pred, tahun_prediksi, tg
     st.session_state['df_asli'] = df_asli
     st.session_state['kolom_produk'] = kolom_produk
     
-    st.markdown("#### Prediksi 9 Produk")
+    st.markdown("#### cek Prediksi 9 Produk")
     data_pred = []
     for produk, data in prediksi_produk.items():
-        data_pred.append({'Produk': produk, 'PREDIKSI PENJUALAN': data['unit_terprediksi']})
+        data_pred.append({'Produk': produk, 'PREgitDIKSI PENJUALAN': data['unit_terprediksi']})
     df_pred = pd.DataFrame(data_pred).sort_values('PREDIKSI PENJUALAN', ascending=False)
     df_pred.insert(0, 'No', range(1, len(df_pred) + 1))
     df_pred['PREDIKSI PENJUALAN'] = df_pred['PREDIKSI PENJUALAN'].apply(format_angka)
