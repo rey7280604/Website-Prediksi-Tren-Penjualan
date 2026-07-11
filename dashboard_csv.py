@@ -760,8 +760,9 @@ def render_evaluasi_model(prediksi_produk, df_asli, kolom_produk):
             st.error(f"Galat saat membaca data aktual: {e}")
             import traceback
             st.error(traceback.format_exc())
+
 def render_tab_produk(df_asli, hari_prediksi, tgl_akhir_pred, tahun_prediksi, tgl_terakhir, tahun_mulai=None, kolom_harga=None, tahun_akhir=None, bulan_prediksi=None):
-    st.markdown("### Analisis Produk 787")
+    st.markdown("### Analisis Produk")
     
     kolom_produk = None
     if 'Product Name' in df_asli.columns:
@@ -790,10 +791,10 @@ def render_tab_produk(df_asli, hari_prediksi, tgl_akhir_pred, tahun_prediksi, tg
     st.session_state['df_asli'] = df_asli
     st.session_state['kolom_produk'] = kolom_produk
     
-    st.markdown("#### cek Prediksi 9 Produk")
+    st.markdown("#### Prediksi 9 Produk")
     data_pred = []
     for produk, data in prediksi_produk.items():
-        data_pred.append({'Produk': produk, 'PREgitDIKSI PENJUALAN': data['unit_terprediksi']})
+        data_pred.append({'Produk': produk, 'PREDIKSI PENJUALAN': data['unit_terprediksi']})
     df_pred = pd.DataFrame(data_pred).sort_values('PREDIKSI PENJUALAN', ascending=False)
     df_pred.insert(0, 'No', range(1, len(df_pred) + 1))
     df_pred['PREDIKSI PENJUALAN'] = df_pred['PREDIKSI PENJUALAN'].apply(format_angka)
@@ -893,7 +894,7 @@ def render_halaman_about():
             Aplikasi ini dirancang untuk membantu pelaku bisnis e-commerce dalam menganalisis data penjualan historis 
             dan menghasilkan prediksi tren penjualan produk. Sistem ini menyediakan dasbor interaktif yang memungkinkan 
             pengguna untuk mengunggah data penjualan dalam format CSV, memilih rentang waktu analisis, dan melihat 
-            hasil prediksi untuk produk-produk terlaris. Aplikasi ini menggunakan algoritma XGBoost untuk melakukan 
+            hasil prediksi untuk produk-produk terlaris. Aplikasi ini menggunakan algoritma Prophet untuk melakukan 
             peramalan time series berdasarkan pola musiman dan tren dari data historis.
         </p>
         <p style="font-size: 16px; line-height: 1.8; color: #333; margin-bottom: 0;">
@@ -925,7 +926,7 @@ def render_halaman_about():
             <div style="background-color: #F0F4FF; padding: 15px; border-radius: 8px;">
                 <h4 style="color: #1E3A8A; margin: 0 0 8px 0; font-size: 16px;">Prediksi Kebutuhan Stok</h4>
                 <p style="font-size: 14px; color: #555; margin: 0; line-height: 1.6;">
-                    Menampilkan perkiraan jumlah unit yang akan terjual berdasarkan analisis tren penjualan historis menggunakan model XGBoost.
+                    Menampilkan perkiraan jumlah unit yang akan terjual berdasarkan analisis tren penjualan historis menggunakan model Prophet.
                 </p>
             </div>
             <div style="background-color: #F0F4FF; padding: 15px; border-radius: 8px;">
@@ -1040,7 +1041,7 @@ def render_halaman_about():
             </div>
             <div style="text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); border-radius: 8px;">
                 <p style="font-size: 20px; font-weight: bold; margin: 0 0 8px 0;">Prediksi Penjualan</p>
-                <p style="font-size: 14px; margin: 0; opacity: 0.9;">Menghasilkan prediksi menggunakan algoritma XGBoost</p>
+                <p style="font-size: 14px; margin: 0; opacity: 0.9;">Menghasilkan prediksi menggunakan algoritma Prophet</p>
             </div>
             <div style="text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); border-radius: 8px;">
                 <p style="font-size: 20px; font-weight: bold; margin: 0 0 8px 0;">Visualisasi Interaktif</p>
@@ -1053,6 +1054,11 @@ def render_halaman_about():
 # --- 7. FUNGSI UTAMA ---
 def utama():
     st.title("Prediksi Tren Penjualan Produk E-Commerce Menggunakan Teknik Analisis Big Data")
+    
+    # 🔑 CLEAR CACHE SAAT PERTAMA KALI LOAD
+    if 'app_initialized' not in st.session_state:
+        st.cache_data.clear()
+        st.session_state['app_initialized'] = True
     
     if 'berkas_terpilih' not in st.session_state: st.session_state['berkas_terpilih'] = None
     if 'jalur_berkas' not in st.session_state: st.session_state['jalur_berkas'] = None
