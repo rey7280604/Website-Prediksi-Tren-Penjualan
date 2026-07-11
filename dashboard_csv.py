@@ -761,7 +761,7 @@ def render_evaluasi_model(prediksi_produk, df_asli, kolom_produk):
             import traceback
             st.error(traceback.format_exc())
 def render_tab_produk(df_asli, hari_prediksi, tgl_akhir_pred, tahun_prediksi, tgl_terakhir, tahun_mulai=None, kolom_harga=None, tahun_akhir=None, bulan_prediksi=None):
-    st.markdown("### Analisis Produk")
+    st.markdown("### Analisis Produk 787")
     
     kolom_produk = None
     if 'Product Name' in df_asli.columns:
