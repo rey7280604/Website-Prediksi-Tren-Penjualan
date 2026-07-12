@@ -659,7 +659,7 @@ def render_evaluasi_model(prediksi_produk, df_asli, kolom_produk):
             mape_str = " + ".join([f"{format_angka_indonesia(v, 2)}\%" for v in mape_values])
 
             st.latex(rf"""
-            \text{{MAPE}} = \frac{{{mape_str}}}{{{n}}} \times 100 = \frac{{{format_angka_indonesia(total_mape, 2)}\%}}{{{n}}} = {format_angka_indonesia(mape_akhir, 2)}\%
+            \text{{MAPE}} = \frac{{{mape_str}}}{{{n}}} = \frac{{{format_angka_indonesia(total_mape, 2)}\%}}{{{n}}} \times 100 = {format_angka_indonesia(mape_akhir, 2)}\%
             """)
 
             st.markdown("**Interpretasi Nilai MAPE:**")
