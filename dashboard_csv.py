@@ -70,7 +70,7 @@ if not os.path.exists(FOLDER_AKTUAL):
 
 # --- 3. FUNGSI PEMBANTU ---
 def format_angka(nilai):
-    return f"{nilai:,.0f}".replace('.','.')
+    return f"{nilai:,.0f}"
 
 def format_angka_dengan_titik(nilai):
     """Format angka dengan titik sebagai pemisah ribuan"""
